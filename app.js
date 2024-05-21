@@ -116,4 +116,38 @@ app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
+
+app.get('/api/insert', (req, res) => {
+    let provider = req.query.provider;
+    let movie_name = req.query.movie_name;
+    let quote = req.query.quote;
+    let sql = 'INSERT INTO movie_quotes (provider, movie_name, quote) VALUES (?, ?, ?)';
+    db.run(sql, [provider, movie_name, quote], (err) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.send('Insert success');
+    });
+});
+
+app.post('/api/insert', (req, res) => {
+    let provider = req.body.provider;
+    let movie_name = req.body.movie_name;
+    let quote = req.body.quote;
+    let sql = 'INSERT INTO movie_quotes (provider, movie_name, quote) VALUES (?, ?, ?)';
+    db.run(sql, [provider, movie_name, quote], (err) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.send('Insert success');
+    });
+});
+
+
+
+
 module.exports = app;
